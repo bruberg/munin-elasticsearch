@@ -107,7 +107,7 @@ foreach my $key1 (keys %infohash2) {
 	    $tmptype = $infohash2{$key1}->{$key2}->{'type'} if $infohash2{$key1}->{$key2}->{'type'};
 	    print "graph_title ", $cluster_name, ": ", $key1, " - ", $tmpinfo, "\n";
 	    print "graph_category Elasticstack\n";
-            print "graph_vlabel ", $infohash2{$key1}->{$key2}->{'vlabel'} if $infohash2{$key1}->{$key2}->{'vlabel'};
+            print "graph_vlabel ", $infohash2{$key1}->{$key2}->{'vlabel'}, "\n" if $infohash2{$key1}->{$key2}->{'vlabel'};
 	}
 	if ($infohash2{$key1}->{$key2}->{'nodes'}) {
 	    for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'nodes'}}) {
@@ -132,7 +132,7 @@ foreach my $key1 (keys %infohash3) {
 		$tmptype = $infohash3{$key1}->{$key2}->{$key3}{'type'} if $infohash3{$key1}->{$key2}->{$key3}->{'type'};
 		print "graph_title ", $cluster_name, ": ", $key1, " - ", $key2, " - ", $tmpinfo, "\n";
 		print "graph_category Elasticstack\n";
-                print "graph_vlabel ", $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'} if $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'};
+                print "graph_vlabel ", $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'}, "\n" if $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'};
 	    }
 	    if ($infohash3{$key1}->{$key2}->{$key3}->{'nodes'}) {
 		for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'nodes'}}) {
