@@ -88,29 +88,6 @@ indices:
     total:
       munin_info: 'Total number of warmer requests'
       munin_type: 'COUNTER'
-  query_cache:
-    memory_size_in_bytes:
-      munin_info: 'Query cache memory size'
-      munin_type: 'GAUGE'
-      munin_vlabel: 'Bytes'
-    total_count:
-      munin_info: 'Total number of queries'
-      munin_type: 'COUNTER'
-    hit_count:
-      munin_info: 'Number of HIT queries'
-      munin_type: 'COUNTER'
-    miss_count:
-      munin_info: 'Number of MISS queries'
-      munin_type: 'COUNTER'
-    cache_queries:
-      munin_info: 'Number of cache queries'
-      munin_type: 'COUNTER'
-    cache_count:
-      munin_info: 'Number of cache count'
-      munin_type: 'COUNTER'
-    evictions:
-      munin_info: 'Number of evictions'
-      munin_type: 'COUNTER'
   segments:
     count:
       munin_info: 'Number of segments'
