@@ -31,6 +31,8 @@ if ($response->is_success) {
     print "WARNING: ", $response->status_line, "\n";
 }
 
+my $cluster_name = $json->{'cluster_name'};
+
 foreach my $key1 (keys %{$json}) {
   if ($yamlconfig->{$key1}) { # We have YAML config for this section
     if ($yamlconfig->{$key1}->{'munin_title'}) {
