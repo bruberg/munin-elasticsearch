@@ -57,7 +57,7 @@ foreach my $key1 (@keys) {
 					# print " - - $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3} is a hash\n";
 				    } else {
 					if ($yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_title'}) {
-					    $infohash3{$key1}->{$key2}->{$key3}->{'label'} = $nodename;
+					    $infohash3{$key1}->{$key2}->{$key3}->{'label'} = $key3;
 					    $infohash3{$key1}->{$key2}->{$key3}->{'value'} = $json->{$key1}->{$key2}->{$key3};
 					    $infohash3{$key1}->{$key2}->{$key3}->{'title'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_title'};
 					    $infohash3{$key1}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_type'};
@@ -71,7 +71,7 @@ foreach my $key1 (@keys) {
 				$infohash2{$key1}->{$key2}->{'title'} = $yamlconfig->{$key1}->{$key2}->{'munin_title'};
 				$infohash2{$key1}->{$key2}->{'type'} = $yamlconfig->{$key1}->{$key2}->{'munin_type'} if $yamlconfig->{$key1}->{$key2}->{'munin_type'};
                                 $infohash2{$key1}->{$key2}->{'vlabel'} = $yamlconfig->{$key1}->{$key2}->{'munin_vlabel'} if $yamlconfig->{$key1}->{$key2}->{'munin_vlabel'};
-				$infohash2{$key1}->{$key2}->{'label'} = $key1;
+				$infohash2{$key1}->{$key2}->{'label'} = $key2;
 				$infohash2{$key1}->{$key2}->{'value'} = $json->{$key1}->{$key2};
 			    }
 			}
