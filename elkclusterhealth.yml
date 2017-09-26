@@ -15,23 +15,23 @@ active_shards:
   munin_type: 'GAUGE'
   munin_vlabel: '#'
 relocating_shards:
-  munin_title: 'Number of relocating shards'
+  munin_title: 'Relocating shards'
   munin_type: 'GAUGE'
   munin_vlabel: '#'
 initializing_shards:
-  munin_title: 'Number of initializing shards'
+  munin_title: 'Initializing shards'
   munin_type: 'GAUGE'
   munin_vlabel: '#'
 unassigned_shards:
-  munin_title: 'Number of unassigned shards'
+  munin_title: 'Unassigned shards'
   munin_type: 'GAUGE'
   munin_vlabel: '#'
 delayed_unassigned_shards:
-  munin_title: 'Number of delayed unassigned shards'
+  munin_title: 'Delayed unassigned shards'
   munin_type: 'GAUGE'
   munin_vlabel: '#'
 number_of_pending_tasks:
-  munin_title: 'Number of pending tasks'
+  munin_title: 'Pending tasks'
   munin_type: 'GAUGE'
   munin_vlabel: '#'
 active_shards_percent_as_number:
