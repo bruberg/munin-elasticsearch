@@ -1,0 +1,189 @@
+---
+indices:
+  count:
+    munin_info: 'Indices'
+    munin_type: 'GAUGE'
+  shards:
+    total:
+      munin_info: 'Total shards'
+      munin_type: 'GAUGE'
+    primaries:
+      munin_info: 'Primary shards'
+      munin_type: 'GAUGE'
+    replication:
+      munin_info: 'Replica shards'
+      munin_type: 'GAUGE'
+  docs:
+    count:
+      munin_info: 'Documents'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Documents'
+    deleted:
+      munin_info: 'Deleted documents'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Documents'
+  store:
+    size_in_bytes:
+      munin_info: 'Index store size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+  fielddata:
+    memory_size_in_bytes:
+      munin_info: 'Memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    evictions:
+      munin_info: 'Evictions'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+  query_cache:
+    memory_size_in_bytes:
+      munin_info: 'Memory size'
+      munin_type: 'COUNTER'
+      munin_vlabel: 'Bytes'
+    total_count:
+      munin_info: 'Total count'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+    hit_count:
+      munin_info: 'Hit count'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+    miss_count:
+      munin_info: 'Miss count'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+    cache_size:
+      munin_info: 'Cache size'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+    cache_count:
+      munin_info: 'Cache count'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+    evictions:
+      munin_info: 'Evictions'
+      munin_type: 'COUNTER'
+      munin_vlabel: '#'
+  get:
+    total:
+      munin_info: 'Total number of GET requests'
+      munin_type: 'COUNTER'
+  search:
+    query_total:
+      munin_info: 'Number of queries'
+      munin_type: 'COUNTER'
+    fetch_total:
+      munin_info: 'Number of fetches'
+      munin_type: 'COUNTER'
+  refresh:
+    total:
+      munin_info: 'Total number of refresh requests'
+      munin_type: 'COUNTER'
+  flush:
+    total:
+      munin_info: 'Number of flushes'
+      munin_type: 'COUNTER'
+  warmer:
+    total:
+      munin_info: 'Total number of warmer requests'
+      munin_type: 'COUNTER'
+  query_cache:
+    memory_size_in_bytes:
+      munin_info: 'Query cache memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    total_count:
+      munin_info: 'Total number of queries'
+      munin_type: 'COUNTER'
+    hit_count:
+      munin_info: 'Number of HIT queries'
+      munin_type: 'COUNTER'
+    miss_count:
+      munin_info: 'Number of MISS queries'
+      munin_type: 'COUNTER'
+    cache_queries:
+      munin_info: 'Number of cache queries'
+      munin_type: 'COUNTER'
+    cache_count:
+      munin_info: 'Number of cache count'
+      munin_type: 'COUNTER'
+    evictions:
+      munin_info: 'Number of evictions'
+      munin_type: 'COUNTER'
+  segments:
+    count:
+      munin_info: 'Number of segments'
+      munin_type: 'GAUGE'
+    memory_in_bytes:
+      munin_info: 'Segment memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    terms_memory_in_bytes:
+      munin_info: 'Terms memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    stored_fields_memory_in_bytes:
+      munin_info: 'Stored fields memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    term_vectors_memory_in_bytes:
+      munin_info: 'Term vectors memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    norms_memory_in_bytes:
+      munin_info: 'Norms memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    points_memory_in_bytes:
+      munin_info: 'Points memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    doc_values_memory_in_bytes:
+      munin_info: 'Doc values memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    index_writer_memory_in_bytes:
+      munin_info: 'Index writer memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    version_map_memory_in_bytes:
+      munin_info: 'Version map memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    fixed_bit_set_memory_in_bytes:
+      munin_info: 'Fixed bit set memory size'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+jvm:
+  mem:
+    heap_used_in_bytes:
+      munin_info: 'Number of segments'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+  threads:
+    count:
+      munin_info: 'JVM threads'
+      munin_type: 'GAUGE'
+  buffer_pools:
+    direct:
+      count:
+        munin_info: 'Buffer pool count'
+        munin_type: 'COUNTER'
+  classes:
+    current_loaded_count:
+      munin_info: 'Current loaded number of classes'
+      munin_type: 'COUNTER'
+    total_loaded_count:
+      munin_info: 'Total loaded number of classes'
+      munin_type: 'COUNTER'
+    total_unloaded_count:
+      munin_info: 'Total unloaded number of classes'
+      munin_type: 'COUNTER'
+
+process:
+  open_file_descriptors:
+    munin_info: 'Open file descriptors'
+    munin_type: 'GAUGE'
+
+
