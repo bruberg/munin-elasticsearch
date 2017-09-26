@@ -1,0 +1,148 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use JSON::XS;
+use YAML::Tiny;
+use Data::Dumper;
+use Munin::Plugin;
+use LWP::UserAgent;
+use JSON qw (decode_json);
+# use Scalar::Util qw/reftype/;
+use vars qw ($config $yamlconfig $json $debug %infohash1 %infohash2 %infohash3 $key $val $yamlname);
+
+$debug = 1;
+
+if (@ARGV && $ARGV[0] eq "config") {
+    $config = 1;
+}
+
+# Open the config
+my $yaml = YAML::Tiny->read ( '/usr/local/etc/elkstats.yml');
+# Get a reference to the first document
+my $yamlconfig = $yaml->[0];
+
+my $statsurl = 'http://localhost:9200/_nodes/stats';
+
+my $ua = LWP::UserAgent->new;
+my $response = $ua->get (${statsurl}) or print ("WARNING: Could not get pulse $statsurl");
+if ($response->is_success) {
+    $json = JSON::XS->new->decode ($response->content);
+} else {
+    print "WARNING: ", $response->status_line, "\n";
+}
+
+# print Dumper ($json), "\n\n" if $debug;
+# my $clustername = $json->
+    # nodes
+    # cluster_name
+    # _nodes
+  
+my $cluster_name = $json->{'cluster_name'};
+my $cluster_name_config = clean_fieldname ($cluster_name);
+
+foreach my $node (keys %{$json->{'nodes'}}) {
+    # Fetch stats from each node
+    # print "DEBUG ", $node, "\n" if $debug;
+    my $nodename = $json->{'nodes'}->{$node}->{'name'};
+    
+    foreach $key (keys %{$json->{'nodes'}->{$node}}) {
+	if ($yamlconfig->{$key}) { # We have YAML config for this section
+
+	    if (ref $json->{'nodes'}->{$node}->{$key} eq ref {}) { # Is it a hash?
+		# print "$json->{'nodes'}->{$node}->{$key} is a hash\n";
+		foreach my $key2 (keys %{$json->{'nodes'}->{$node}->{$key}}) {
+		    # print "nodes -> $node -> $key -> $key2\n";
+		    if ($yamlconfig->{$key}->{$key2}) { # We have YAML config for this section, so we include it
+
+			if (ref $json->{'nodes'}->{$node}->{$key}->{$key2} eq ref {}) {
+			    # print " - $json->{'nodes'}->{$node}->{$key}->{$key2} is a hash\n";
+			    foreach my $key3 (keys %{$json->{'nodes'}->{$node}->{$key}->{$key2}}) {
+				# print "nodes -> $node -> $key -> $key2 -> $key3\n";
+				if ($yamlconfig->{$key}->{$key2}->{$key3}) {
+
+				    if (ref $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3} eq ref {}) { # Is it a hash?
+					# print " - - $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3} is a hash\n";
+				    } else {
+					if ($yamlconfig->{$key}->{$key2}->{$key3}->{'munin_info'}) {
+					    $yamlname = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_info'};
+					    $infohash3{$key}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'} = $nodename;
+					    $infohash3{$key}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'} = $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3};
+					    $infohash3{$key}->{$key2}->{$key3}->{'info'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_info'};
+					    $infohash3{$key}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_type'};
+					}
+				    }
+				}
+			    }
+			} else { # $key2 is not a hash, checking for name
+			    if ($yamlconfig->{$key}->{$key2}->{'munin_info'}) {
+				$yamlname = $yamlconfig->{$key}->{$key2}->{'munin_info'};
+				$infohash2{$key}->{$key2}->{'info'} = $yamlconfig->{$key}->{$key2}->{'munin_info'};
+				$infohash2{$key}->{$key2}->{'type'} = $yamlconfig->{$key}->{$key2}->{'munin_type'} if $yamlconfig->{$key}->{$key2}->{'munin_type'};
+				$infohash2{$key}->{$key2}->{'nodes'}->{$node}->{'label'} = $nodename;
+				$infohash2{$key}->{$key2}->{'nodes'}->{$node}->{'value'} = $json->{'nodes'}->{$node}->{$key}->{$key2};
+			    }
+			}
+		    }
+		}
+	    } else { # key is not a hash
+		if ($yamlconfig->{$key}->{'munin_info'}) {
+		    $yamlname = $yamlconfig->{$key}->{'munin_info'};
+		    $infohash1{$key}->{'info'} = $yamlconfig->{$key}->{'munin_info'};
+		    $infohash1{$key}->{'type'} = $yamlconfig->{$key}->{'munin_type'} if $yamlconfig->{$key}->{'munin_type'};
+		    $infohash1{$key}->{'nodes'}->{$node}->{'label'} = $nodename;
+		    $infohash1{$key}->{'nodes'}->{$node}->{'value'} = $json->{'nodes'}->{$node}->{$key};
+		}
+	    }
+	}
+    }
+}
+
+foreach my $key1 (keys %infohash2) {
+    foreach my $key2 (keys %{$infohash2{$key1}}) {
+	print "\nmultigraph elkstats__${key1}__${key2}\n";
+	my $tmptype = "";
+	if ($config) {
+	    my $tmpinfo = $infohash2{$key1}->{$key2}->{'info'} if $infohash2{$key1}->{$key2}->{'info'};
+	    $tmptype = $infohash2{$key1}->{$key2}->{'type'} if $infohash2{$key1}->{$key2}->{'type'};
+	    print "graph_title ", $cluster_name, ": ", $key1, " - ", $tmpinfo, "\n";
+	    print "graph_category Elasticstack\n";
+	}
+	if ($infohash2{$key1}->{$key2}->{'nodes'}) {
+	    for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'nodes'}}) {
+		if ($config) {
+		    print $node, ".label ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'label'}, "\n";
+		    print $node, ".type ", $tmptype, "\n" if $tmptype;
+		} else {
+		    print $node, ".value ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'value'}, "\n";
+		}
+	    }
+	}
+    }
+}
+
+foreach my $key1 (keys %infohash3) {
+    foreach my $key2 (keys %{$infohash3{$key1}}) {
+	foreach my $key3 (keys %{$infohash3{$key1}->{$key2}}) {
+	    print "\nmultigraph elkstats__${key1}__${key2}__${key3}\n";
+	    my $tmptype = "";
+	    if ($config) {
+		my $tmpinfo = $infohash3{$key1}->{$key2}->{$key3}->{'info'} if $infohash3{$key1}->{$key2}->{$key3}->{'info'};
+		$tmptype = $infohash3{$key1}->{$key2}->{$key3}{'type'} if $infohash3{$key1}->{$key2}->{$key3}->{'type'};
+		print "graph_title ", $cluster_name, ": ", $key1, " - ", $key2, " - ", $tmpinfo, "\n";
+		print "graph_category Elasticstack\n";
+	    }
+	    if ($infohash3{$key1}->{$key2}->{$key3}->{'nodes'}) {
+		for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'nodes'}}) {
+		    if ($config) {
+			print $node, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'}, "\n";
+			print $node, ".type ", $tmptype, "\n" if $tmptype;
+		    } else {
+			print $node, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'}, "\n";
+		    }
+		}
+	    }
+	}
+    }
+}
+
