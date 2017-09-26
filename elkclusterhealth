@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use JSON::XS;
+use YAML::Tiny;
+use Data::Dumper;
+use Munin::Plugin;
+use LWP::UserAgent;
+use JSON qw (decode_json);
+use vars qw ($config $yamlconfig $json $debug %infohash1 %infohash1 %infohash3 $key $val);
+
+$debug = 1;
+
+if (@ARGV && $ARGV[0] eq "config") {
+    $config = 1;
+}
+
+# Open the config
+my $yaml = YAML::Tiny->read ( '/usr/local/etc/elkclusterhealth.yml');
+# Get a reference to the first document
+my $yamlconfig = $yaml->[0];
+
+my $statsurl = 'http://localhost:9200/_cluster/health';
+
+my $ua = LWP::UserAgent->new;
+my $response = $ua->get (${statsurl}) or print ("WARNING: Could not read stats from $statsurl");
+if ($response->is_success) {
+    $json = JSON::XS->new->decode ($response->content);
+} else {
+    print "WARNING: ", $response->status_line, "\n";
+}
+
+foreach my $key1 (keys %{$json}) {
+  if ($yamlconfig->{$key1}) { # We have YAML config for this section
+    if ($yamlconfig->{$key1}->{'munin_title'}) {
+      $infohash1{$key1}->{'title'} = $yamlconfig->{$key1}->{'munin_title'}; 
+      $infohash1{$key1}->{'type'} = $yamlconfig->{$key1}->{'munin_type'} if $yamlconfig->{$key1}->{'munin_type'};
+      $infohash1{$key1}->{'vlabel'} = $yamlconfig->{$key1}->{'munin_vlabel'} if $yamlconfig->{$key1}->{'munin_vlabel'};
+      $infohash1{$key1}->{'label'} = $key1;
+      $infohash1{$key1}->{'value'} = $json->{$key1};
+    }
+  }
+}
+
+foreach my $key1 (keys %infohash1) {
+        print "\nmultigraph elkclusterhealth__${key1}\n";
+        my $tmptype = "";
+        if ($config) {
+            my $tmptitle = $infohash1{$key1}->{'title'} if $infohash1{$key1}->{'title'};
+            $tmptype = $infohash1{$key1}->{'type'} if $infohash1{$key1}->{'type'};
+            print "graph_title ", $cluster_name, " health: ", $key1, " - ", $tmptitle, "\n";
+            print "graph_category Elasticstack\n";
+            print "graph_vlabel ", $infohash1{$key1}->{'vlabel'}, "\n" if $infohash1{$key1}->{'vlabel'};
+            print $key1, ".label ", $infohash1{$key1}->{'label'}, "\n";
+            print $key1, ".type ", $tmptype, "\n" if $tmptype;
+        } else {
+            print $key1, ".value ", $infohash1{$key1}->{'value'}, "\n";
+        }
+    }
+}

@@ -1,0 +1,40 @@
+number_of_nodes:
+  munin_title: 'Total number of nodes'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+number_of_data_nodes:
+  munin_title: 'Number of data nodes'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+active_primary_shards:
+  munin_title: 'Active primary shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+active_shards:
+  munin_title: 'Total number of shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+relocating_shards:
+  munin_title: 'Number of relocating shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+initializing_shards:
+  munin_title: 'Number of initializing shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+unassigned_shards:
+  munin_title: 'Number of unassigned shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+delayed_unassigned_shards:
+  munin_title: 'Number of delayed unassigned shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+number_of_pending_tasks:
+  munin_title: 'Number of pending tasks'
+  munin_type: 'GAUGE'
+  munin_vlabel: '#'
+active_shards_percent_as_number:
+  munin_title: 'Active shards'
+  munin_type: 'GAUGE'
+  munin_vlabel: '%'
