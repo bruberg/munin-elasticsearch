@@ -64,10 +64,10 @@ foreach my $node (keys %{$json->{'nodes'}}) {
 				    if (ref $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3} eq ref {}) { # Is it a hash?
 					# print " - - $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3} is a hash\n";
 				    } else {
-					if ($yamlconfig->{$key}->{$key2}->{$key3}->{'munin_info'}) {
+					if ($yamlconfig->{$key}->{$key2}->{$key3}->{'munin_title'}) {
 					    $infohash3{$key}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'} = $nodename;
 					    $infohash3{$key}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'} = $json->{'nodes'}->{$node}->{$key}->{$key2}->{$key3};
-					    $infohash3{$key}->{$key2}->{$key3}->{'info'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_info'};
+					    $infohash3{$key}->{$key2}->{$key3}->{'title'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_title'};
 					    $infohash3{$key}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_type'};
                                             $infohash3{$key}->{$key2}->{$key3}->{'vlabel'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_vlabel'} if $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_vlabel'};
 					}
@@ -75,8 +75,8 @@ foreach my $node (keys %{$json->{'nodes'}}) {
 				}
 			    }
 			} else { # $key2 is not a hash, checking for name
-			    if ($yamlconfig->{$key}->{$key2}->{'munin_info'}) {
-				$infohash2{$key}->{$key2}->{'info'} = $yamlconfig->{$key}->{$key2}->{'munin_info'};
+			    if ($yamlconfig->{$key}->{$key2}->{'munin_title'}) {
+				$infohash2{$key}->{$key2}->{'title'} = $yamlconfig->{$key}->{$key2}->{'munin_title'};
 				$infohash2{$key}->{$key2}->{'type'} = $yamlconfig->{$key}->{$key2}->{'munin_type'} if $yamlconfig->{$key}->{$key2}->{'munin_type'};
                                 $infohash2{$key}->{$key2}->{'vlabel'} = $yamlconfig->{$key}->{$key2}->{'munin_vlabel'} if $yamlconfig->{$key}->{$key2}->{'munin_vlabel'};
 				$infohash2{$key}->{$key2}->{'nodes'}->{$node}->{'label'} = $nodename;
@@ -86,8 +86,8 @@ foreach my $node (keys %{$json->{'nodes'}}) {
 		    }
 		}
 	    } else { # key is not a hash
-		if ($yamlconfig->{$key}->{'munin_info'}) {
-		    $infohash1{$key}->{'info'} = $yamlconfig->{$key}->{'munin_info'};
+		if ($yamlconfig->{$key}->{'munin_title'}) {
+		    $infohash1{$key}->{'title'} = $yamlconfig->{$key}->{'munin_title'};
 		    $infohash1{$key}->{'type'} = $yamlconfig->{$key}->{'munin_type'} if $yamlconfig->{$key}->{'munin_type'};
                     $infohash1{$key}->{'vlabel'} = $yamlconfig->{$key}->{'munin_vlabel'} if $yamlconfig->{$key}->{'munin_vlabel'};
 		    $infohash1{$key}->{'nodes'}->{$node}->{'label'} = $nodename;
@@ -103,9 +103,9 @@ foreach my $key1 (keys %infohash2) {
 	print "\nmultigraph elknodestats__${key1}__${key2}\n";
 	my $tmptype = "";
 	if ($config) {
-	    my $tmpinfo = $infohash2{$key1}->{$key2}->{'info'} if $infohash2{$key1}->{$key2}->{'info'};
+	    my $tmptitle = $infohash2{$key1}->{$key2}->{'title'} if $infohash2{$key1}->{$key2}->{'title'};
 	    $tmptype = $infohash2{$key1}->{$key2}->{'type'} if $infohash2{$key1}->{$key2}->{'type'};
-	    print "graph_title ", $cluster_name, ": ", $key1, " - ", $tmpinfo, "\n";
+	    print "graph_title ", $cluster_name, ": ", $key1, " - ", $tmptitle, "\n";
 	    print "graph_category Elasticstack\n";
             print "graph_vlabel ", $infohash2{$key1}->{$key2}->{'vlabel'}, "\n" if $infohash2{$key1}->{$key2}->{'vlabel'};
 	}
@@ -128,9 +128,9 @@ foreach my $key1 (keys %infohash3) {
 	    print "\nmultigraph elknodestats__${key1}__${key2}__${key3}\n";
 	    my $tmptype = "";
 	    if ($config) {
-		my $tmpinfo = $infohash3{$key1}->{$key2}->{$key3}->{'info'} if $infohash3{$key1}->{$key2}->{$key3}->{'info'};
+		my $tmptitle = $infohash3{$key1}->{$key2}->{$key3}->{'title'} if $infohash3{$key1}->{$key2}->{$key3}->{'title'};
 		$tmptype = $infohash3{$key1}->{$key2}->{$key3}{'type'} if $infohash3{$key1}->{$key2}->{$key3}->{'type'};
-		print "graph_title ", $cluster_name, ": ", $key1, " - ", $key2, " - ", $tmpinfo, "\n";
+		print "graph_title ", $cluster_name, ": ", $key1, " - ", $key2, " - ", $tmptitle, "\n";
 		print "graph_category Elasticstack\n";
                 print "graph_vlabel ", $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'}, "\n" if $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'};
 	    }

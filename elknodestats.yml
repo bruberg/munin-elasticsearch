@@ -2,169 +2,169 @@
 fs:
   total:
     total_in_bytes:
-      munin_info: 'Total disk space'
+      munin_title: 'Total disk space'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     free_in_bytes:
-      munin_info: 'Total free disk space'
+      munin_title: 'Total free disk space'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     available_in_bytes:
-      munin_info: 'Total available disk space'
+      munin_title: 'Total available disk space'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
   io_stats:
     total:
       operations:
-        munin_info: 'Operations'
+        munin_title: 'Operations'
         munin_type: 'COUNTER'
       read_operations:
-        munin_info: 'Read operations'
+        munin_title: 'Read operations'
         munin_type: 'COUNTER'
 http:
   total_opened:
-    munin_info: 'Total opened'
+    munin_title: 'Total opened'
     munin_type: 'COUNTER'
   current_open:
-    munin_info: 'Current open'
+    munin_title: 'Current open'
     munin_type: 'GAUGE'
 indices:
   docs:
     count:
-      munin_info: 'Docs count'
+      munin_title: 'Docs count'
       munin_type: 'GAUGE'
   store:
     size_in_bytes:
-      munin_info: 'Index store size'
+      munin_title: 'Index store size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
   indexing:
     index_total:
-      munin_info: 'Total size of index'
+      munin_title: 'Total size of index'
       munin_type: 'GAUGE'
     index_time_in_millis:
-      munin_info: 'Indexing time in millis'
+      munin_title: 'Indexing time in millis'
       munin_type: 'COUNTER'
       munin_vlabel: 'seconds'
   get:
     total:
-      munin_info: 'Total number of GET requests'
+      munin_title: 'Total number of GET requests'
       munin_type: 'COUNTER'
   search:
     query_total:
-      munin_info: 'Number of queries'
+      munin_title: 'Number of queries'
       munin_type: 'COUNTER'
     fetch_total:
-      munin_info: 'Number of fetches'
+      munin_title: 'Number of fetches'
       munin_type: 'COUNTER'
   refresh:
     total:
-      munin_info: 'Total number of refresh requests'
+      munin_title: 'Total number of refresh requests'
       munin_type: 'COUNTER'
   flush:
     total:
-      munin_info: 'Number of flushes'
+      munin_title: 'Number of flushes'
       munin_type: 'COUNTER'
   warmer:
     total:
-      munin_info: 'Total number of warmer requests'
+      munin_title: 'Total number of warmer requests'
       munin_type: 'COUNTER'
   query_cache:
     memory_size_in_bytes:
-      munin_info: 'Query cache memory size'
+      munin_title: 'Query cache memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     total_count:
-      munin_info: 'Total number of queries'
+      munin_title: 'Total number of queries'
       munin_type: 'COUNTER'
     hit_count:
-      munin_info: 'Number of HIT queries'
+      munin_title: 'Number of HIT queries'
       munin_type: 'COUNTER'
     miss_count:
-      munin_info: 'Number of MISS queries'
+      munin_title: 'Number of MISS queries'
       munin_type: 'COUNTER'
     cache_queries:
-      munin_info: 'Number of cache queries'
+      munin_title: 'Number of cache queries'
       munin_type: 'COUNTER'
     cache_count:
-      munin_info: 'Number of cache count'
+      munin_title: 'Number of cache count'
       munin_type: 'COUNTER'
     evictions:
-      munin_info: 'Number of evictions'
+      munin_title: 'Number of evictions'
       munin_type: 'COUNTER'
   segments:
     count:
-      munin_info: 'Number of segments'
+      munin_title: 'Number of segments'
       munin_type: 'GAUGE'
     memory_in_bytes:
-      munin_info: 'Segment memory size'
+      munin_title: 'Segment memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     terms_memory_in_bytes:
-      munin_info: 'Terms memory size'
+      munin_title: 'Terms memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     stored_fields_memory_in_bytes:
-      munin_info: 'Stored fields memory size'
+      munin_title: 'Stored fields memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     term_vectors_memory_in_bytes:
-      munin_info: 'Term vectors memory size'
+      munin_title: 'Term vectors memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     norms_memory_in_bytes:
-      munin_info: 'Norms memory size'
+      munin_title: 'Norms memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     points_memory_in_bytes:
-      munin_info: 'Points memory size'
+      munin_title: 'Points memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     doc_values_memory_in_bytes:
-      munin_info: 'Doc values memory size'
+      munin_title: 'Doc values memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     index_writer_memory_in_bytes:
-      munin_info: 'Index writer memory size'
+      munin_title: 'Index writer memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     version_map_memory_in_bytes:
-      munin_info: 'Version map memory size'
+      munin_title: 'Version map memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     fixed_bit_set_memory_in_bytes:
-      munin_info: 'Fixed bit set memory size'
+      munin_title: 'Fixed bit set memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
 jvm:
   mem:
     heap_used_in_bytes:
-      munin_info: 'Number of segments'
+      munin_title: 'Number of segments'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
   threads:
     count:
-      munin_info: 'JVM threads'
+      munin_title: 'JVM threads'
       munin_type: 'GAUGE'
   buffer_pools:
     direct:
       count:
-        munin_info: 'Buffer pool count'
+        munin_title: 'Buffer pool count'
         munin_type: 'COUNTER'
   classes:
     current_loaded_count:
-      munin_info: 'Current loaded number of classes'
+      munin_title: 'Current loaded number of classes'
       munin_type: 'COUNTER'
     total_loaded_count:
-      munin_info: 'Total loaded number of classes'
+      munin_title: 'Total loaded number of classes'
       munin_type: 'COUNTER'
     total_unloaded_count:
-      munin_info: 'Total unloaded number of classes'
+      munin_title: 'Total unloaded number of classes'
       munin_type: 'COUNTER'
 
 process:
   open_file_descriptors:
-    munin_info: 'Open file descriptors'
+    munin_title: 'Open file descriptors'
     munin_type: 'GAUGE'
 
 
