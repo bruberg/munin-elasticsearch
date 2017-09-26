@@ -51,7 +51,7 @@ foreach my $key1 (keys %infohash1) {
     if ($config) {
 	my $tmptitle = $infohash1{$key1}->{'title'} if $infohash1{$key1}->{'title'};
 	$tmptype = $infohash1{$key1}->{'type'} if $infohash1{$key1}->{'type'};
-	print "graph_title ", $cluster_name, " health: ", $key1, " - ", $tmptitle, "\n";
+	print "graph_title ", $cluster_name, " health: ", $tmptitle, "\n";
 	print "graph_category Elasticstack\n";
 	print "graph_vlabel ", $infohash1{$key1}->{'vlabel'}, "\n" if $infohash1{$key1}->{'vlabel'};
 	print $key1, ".label ", $infohash1{$key1}->{'label'}, "\n";
