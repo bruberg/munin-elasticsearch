@@ -45,7 +45,7 @@ indices:
     index_time_in_millis:
       munin_info: 'Indexing time in millis'
       munin_type: 'COUNTER'
-      munin_vlabel 'seconds'
+      munin_vlabel: 'seconds'
   get:
     total:
       munin_info: 'Total number of GET requests'
