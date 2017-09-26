@@ -2,8 +2,17 @@
 fs:
   total:
     total_in_bytes:
-      munin_info: 'Total file system usage in bytes'
+      munin_info: 'Total disk space in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    free_in_bytes:
+      munin_info: 'Total free disk space in bytes'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
+    available_in_bytes:
+      munin_info: 'Total available disk space in bytes'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
   io_stats:
     total:
       operations:
@@ -16,6 +25,9 @@ http:
   total_opened:
     munin_info: 'Total opened'
     munin_type: 'COUNTER'
+  current_open:
+    munin_info: 'Current open'
+    munin_type: 'GAUGE'
 indices:
   docs:
     count:
@@ -25,6 +37,7 @@ indices:
     size_in_bytes:
       munin_info: 'Index store size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
   indexing:
     index_total:
       munin_info: 'Total size of index'
@@ -84,38 +97,49 @@ indices:
     memory_in_bytes:
       munin_info: 'Segment memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     terms_memory_in_bytes:
       munin_info: 'Terms memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     stored_fields_memory_in_bytes:
       munin_info: 'Stored fields memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     term_vectors_memory_in_bytes:
       munin_info: 'Term vectors memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     norms_memory_in_bytes:
       munin_info: 'Norms memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     points_memory_in_bytes:
       munin_info: 'Points memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     doc_values_memory_in_bytes:
       munin_info: 'Doc values memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     index_writer_memory_in_bytes:
       munin_info: 'Index writer memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     version_map_memory_in_bytes:
       munin_info: 'Version map memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
     fixed_bit_set_memory_in_bytes:
       munin_info: 'Fixed bit set memory size in bytes'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
 jvm:
   mem:
     heap_used_in_bytes:
       munin_info: 'Number of segments'
       munin_type: 'GAUGE'
+      munin_vlabel: 'Bytes'
   threads:
     count:
       munin_info: 'JVM threads'
