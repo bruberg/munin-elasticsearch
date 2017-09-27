@@ -41,9 +41,7 @@ foreach my $key1 (@keys) {
   if ($yamlconfig->{$key1}) { # We have YAML config for this section
     
     if (ref $json->{$key1} eq ref {}) { # Is it a hash?
-      # print "$json->{'nodes'}->{$node}->{$key} is a hash\n";
       foreach my $key2 (keys %{$json->{$key1}}) {
-	# print "nodes -> $node -> $key -> $key2\n";
 	if ($yamlconfig->{$key1}->{$key2}) { # We have YAML config for this section, so we include it
 	  
 	  if (ref $json->{$key1}->{$key2} eq ref {}) {
