@@ -45,12 +45,13 @@ indices:
       munin_divide_by: 1000
   indexing:
     index_total:
-      munin_title: 'Total size of index'
+      munin_title: 'Total number of documents indexed'
       munin_type: 'GAUGE'
     index_time_in_millis:
-      munin_title: 'Indexing time in millis'
+      munin_title: 'Indexing time'
       munin_type: 'COUNTER'
       munin_vlabel: 'seconds'
+      munin_divide_by: 1000
   get:
     total:
       munin_title: 'Total number of GET requests'
