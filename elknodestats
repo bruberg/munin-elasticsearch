@@ -117,7 +117,7 @@ foreach my $key1 (keys %infohash2) {
 	    for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'nodes'}}) {
 		if ($config) {
 		    print $node, ".label ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'label'}, "\n";
-                    print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'divide_by'}, "/\n" if $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'divide_by'}
+                    print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'divide_by'}, "/\n" if $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'divide_by'};
 		    print $node, ".type ", $tmptype, "\n" if $tmptype;
 		} else {
 		    print $node, ".value ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'value'}, "\n";
@@ -143,7 +143,7 @@ foreach my $key1 (keys %infohash3) {
 		for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'nodes'}}) {
 		    if ($config) {
 			print $node, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'}, "\n";
-                        print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'divide_by'}, "/\n" if $infohash2{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'divide_by'}
+                        print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'divide_by'}, "/\n" if $infohash2{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'divide_by'};
 			print $node, ".type ", $tmptype, "\n" if $tmptype;
 		    } else {
 			print $node, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'}, "\n";
