@@ -146,7 +146,7 @@ indices:
 jvm:
   mem:
     heap_used_in_bytes:
-      munin_title: 'Number of segments'
+      munin_title: 'JVM heap used'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
   threads:
