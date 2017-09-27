@@ -1,0 +1,136 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use JSON::XS;
+use YAML::Tiny;
+use Data::Dumper;
+use Munin::Plugin;
+use LWP::UserAgent;
+use JSON qw (decode_json);
+use vars qw ($config $yamlconfig $json $debug %infohash1 %infohash2 %infohash3 $key $val);
+
+$debug = 0;
+
+if (@ARGV && $ARGV[0] eq "config") {
+  $config = 1;
+}
+
+# Open the config
+my $yaml = YAML::Tiny->read ( '/usr/local/etc/elkstats.yml');
+# Get a reference to the first document
+my $yamlconfig = $yaml->[0];
+
+my $statsurl = 'http://localhost:9200/_stats';
+
+my $ua = LWP::UserAgent->new;
+my $response = $ua->get (${statsurl}) or print ("WARNING: Could not read stats from $statsurl");
+my $tmpjson;
+if ($response->is_success) {
+  $tmpjson = JSON::XS->new->decode ($response->content);
+} else {
+  print "WARNING: ", $response->status_line, "\n";
+}
+$json = $tmpjson->{'_all'};
+
+foreach my $key1 (keys %{$json}) {
+  if (ref $json->{$key1} eq ref {}) { # Is it a hash?
+    foreach my $key2 (keys %{$json->{$key1}}) {
+      if ($yamlconfig->{$key}->{$key2}) { # We have YAML config for this section, so we include it
+	if (ref $json->{$key1}->{$key2} eq ref {}) {
+	  foreach my $key3 (keys %{$json->{$key1}->{$key2}}) {
+	    if ($yamlconfig->{$key1}->{$key2}->{$key3}) {
+	      
+	      if (ref $json->{$key1}->{$key2}->{$key3} eq ref {}) { # Is it a hash?
+		# print " - - $json->{'_all'}->{$node}->{$key}->{$key2}->{$key3} is a hash\n";
+	      } else {
+		if ($yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_title'}) {
+		  $infohash3{$key1}->{$key2}->{$key3}->{'label'} = ($yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_label'} || $key3);
+		  $infohash3{$key1}->{$key2}->{$key3}->{'value'} = $json->{$key1}->{$key2}->{$key3};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'title'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_title'};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_type'};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_vlabel'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_vlabel'};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_divide_by'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_divide_by'};
+		  
+		}
+	      }
+	    }
+	  }
+	} else { # $key2 is not a hash, checking for name
+	  if ($yamlconfig->{$key1}->{$key2}->{'munin_title'}) {
+            $infohash2{$key1}->{$key2}->{'label'} = ($yamlconfig->{$key1}->{$key2}->{'munin_label'} || $key2);
+	    $infohash2{$key1}->{$key2}->{'value'} = $json->{$key1}->{$key2};
+	    $infohash2{$key1}->{$key2}->{'title'} = $yamlconfig->{$key1}->{$key2}->{'munin_title'};
+	    $infohash2{$key1}->{$key2}->{'type'} = $yamlconfig->{$key1}->{$key2}->{'munin_type'} if $yamlconfig->{$key1}->{$key2}->{'munin_type'};
+	    $infohash2{$key1}->{$key2}->{'vlabel'} = $yamlconfig->{$key1}->{$key2}->{'munin_vlabel'} if $yamlconfig->{$key1}->{$key2}->{'munin_vlabel'};
+	    $infohash2{$key1}->{$key2}->{'divide_by'} = $yamlconfig->{$key1}->{$key2}->{'munin_divide_by'} if $yamlconfig->{$key1}->{$key2}->{'munin_divide_by'};
+	  }
+	}
+      }
+    }
+  } else { # key is not a hash
+    if ($yamlconfig->{$key1}->{'munin_title'}) {
+      $infohash1{$key1}->{'label'} = ($yamlconfig->{$key1}->{'munin_label'} || $key1);
+      $infohash1{$key1}->{'value'} = $json->{$key1};
+      $infohash1{$key1}->{'title'} = $yamlconfig->{$key1}->{'munin_title'};
+      $infohash1{$key1}->{'type'} = $yamlconfig->{$key1}->{'munin_type'} if $yamlconfig->{$key1}->{'munin_type'};
+      $infohash1{$key1}->{'vlabel'} = $yamlconfig->{$key1}->{'munin_vlabel'} if $yamlconfig->{$key1}->{'munin_vlabel'};
+      $infohash1{$key1}->{'divide_by'} = $yamlconfig->{$key1}->{'munin_divide_by'} if $yamlconfig->{$key1}->{'munin_divide_by'};
+    }
+  }
+}
+
+foreach my $key1 (keys %infohash2) {
+  foreach my $key2 (keys %{$infohash2{$key1}}) {
+    print "\nmultigraph elkstats__${key1}__${key2}\n";
+    my $tmptype = "";
+    if ($config) {
+      my $tmptitle = $infohash2{$key1}->{$key2}->{'title'} if $infohash2{$key1}->{$key2}->{'title'};
+      $tmptype = $infohash2{$key1}->{$key2}->{'type'} if $infohash2{$key1}->{$key2}->{'type'};
+      print "graph_title ", $cluster_name, " nodes: ", ucfirst ($key1), " - ", $tmptitle, "\n";
+      print "graph_category Elasticstack\n";
+      print "graph_vlabel ", $infohash2{$key1}->{$key2}->{'vlabel'}, "\n" if $infohash2{$key1}->{$key2}->{'vlabel'};
+    }
+    if ($infohash2{$key1}->{$key2}->{'_all'}) {
+      for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'_all'}}) {
+	my $fieldnamenode = clean_fieldname ($node);
+	if ($config) {
+	  print $fieldnamenode, ".label ", $infohash2{$key1}->{$key2}->{'label'}, "\n";
+	  print $fieldnamenode, ".cdef ", $fieldnamenode, ",", $infohash2{$key1}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$key1}->{$key2}->{'divide_by'};
+	  print $fieldnamenode, ".type ", $tmptype, "\n" if $tmptype;
+	} else {
+	  print $fieldnamenode, ".value ", $infohash2{$key1}->{$key2}->{'value'}, "\n";
+	}
+      }
+    }
+  }
+}
+
+foreach my $key1 (keys %infohash3) {
+  foreach my $key2 (keys %{$infohash3{$key1}}) {
+    foreach my $key3 (keys %{$infohash3{$key1}->{$key2}}) {
+      print "\nmultigraph elkstats__${key1}__${key2}__${key3}\n";
+      my $tmptype = "";
+      if ($config) {
+	my $tmptitle = $infohash3{$key1}->{$key2}->{$key3}->{'title'} if $infohash3{$key1}->{$key2}->{$key3}->{'title'};
+	$tmptype = $infohash3{$key1}->{$key2}->{$key3}{'type'} if $infohash3{$key1}->{$key2}->{$key3}->{'type'};
+	print "graph_title ", $cluster_name, " nodes: ", ucfirst ($key1), " - ", ucfirst ($key2), " - ", $tmptitle, "\n";
+	print "graph_category Elasticstack\n";
+	print "graph_vlabel ", $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'}, "\n" if $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'};
+      }
+      if ($infohash3{$key1}->{$key2}->{$key3}->{'_all'}) {
+	for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'_all'}}) {
+	  my $fieldnamenode = clean_fieldname ($node);
+	  if ($config) {
+	    print $fieldnamenode, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'label'}, "\n";
+	    print $fieldnamenode, ".cdef ", $fieldnamenode, ",", $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'};
+	    print $fieldnamenode, ".type ", $tmptype, "\n" if $tmptype;
+	  } else {
+	    print $fieldnamenode, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'value'}, "\n";
+	  }
+	}
+      }
+    }
+  }
+}
+

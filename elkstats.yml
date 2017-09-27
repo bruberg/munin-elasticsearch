@@ -1,0 +1,46 @@
+primaries:
+  search:
+    open_contexts: 0
+    query_total:
+      munin_title: 'Total number of queries'
+      munin_vlabel: '#'
+    query_time_in_millis:
+      munin_title: 'Total time spent on queries'
+      munin_vlabel: 'Seconds'
+      munin_divide_by: 1000
+    query_current:
+      munin_title: 'Number of queries currently in progress'
+      munin_vlabel: '#'
+    fetch_total:
+      munin_title: 'Total number of fetches'
+      munin_vlabel: '#'
+    fetch_time_in_millis:
+      munin_title: 'Total time spent on fetches'
+      munin_vlabel: 'Seconds'
+      munin_divide_by: 1000
+    fetch_current:
+      munin_title: 'Number of fetches currently in progress'
+      munin_vlabel: '#'
+total:
+  search:
+    open_contexts: 0
+    query_total:
+      munin_title: 'Total number of queries'
+      munin_vlabel: '#'
+    query_time_in_millis:
+      munin_title: 'Total time spent on queries'
+      munin_vlabel: 'Seconds'
+      munin_divide_by: 1000
+    query_current:
+      munin_title: 'Number of queries currently in progress'
+      munin_vlabel: '#'
+    fetch_total:
+      munin_title: 'Total number of fetches'
+      munin_vlabel: '#'
+    fetch_time_in_millis:
+      munin_title: 'Total time spent on fetches'
+      munin_vlabel: 'Seconds'
+      munin_divide_by: 1000
+    fetch_current:
+      munin_title: 'Number of fetches currently in progress'
+      munin_vlabel: '#'
