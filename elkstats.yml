@@ -1,83 +1,83 @@
 primaries:
   indexing:
     index_total:
-      munin_title: 'Total number of documents indexed'
+      munin_title: 'Documents indexed'
       munin_vlabel: '#'
       munin_label: 'Documents'
     index_time_in_millis:
-      munin_title: 'Total time spent indexing documents'
+      munin_title: 'Time spent indexing documents'
       munin_vlabel: 'Seconds'
       munin_label: 'Indexing time'
       munin_divide_by: 1000
     index_current:
-      munin_title: 'Number of documents currently being indexed'
+      munin_title: 'Documents currently being indexed'
       munin_vlabel: '#'
       munin_label: 'Documents'
   refresh:
     total:
-      munin_title: 'Total number of index refreshes'
+      munin_title: 'Index refreshes'
       munin_vlabel: '#'
       munin_label: 'Refreshes'
     total_time_in_millis:
-      munin_title: 'Total time spent refreshing indices'
+      munin_title: 'Time spent refreshing indices'
       munin_vlabel: 'Seconds'
       munin_label: 'Refresh time'
       munin_divide_by: 1000
   flush:
     total:
-      munin_title: 'Total number of index flushes to disk'
+      munin_title: 'Index flushes to disk'
       munin_vlabel: '#'
       munin_label: 'Indices'
     total_time_in_millis:
-      munin_title: 'Total time spent flushing indices to disk'
+      munin_title: 'Time spent flushing indices to disk'
       munin_vlabel: 'Seconds'
       munin_label: 'Index flushes'
       munin_divide_by: 1000
   search:
     query_total:
-      munin_title: 'Total number of queries'
+      munin_title: 'Number of queries'
       munin_vlabel: '#'
       munin_label: 'Queries'
     query_time_in_millis:
-      munin_title: 'Total time spent on queries'
+      munin_title: 'Time spent on queries'
       munin_vlabel: 'Seconds'
       munin_label: 'Query time'
       munin_divide_by: 1000
     query_current:
-      munin_title: 'Number of queries currently in progress'
+      munin_title: 'Queries currently in progress'
       munin_vlabel: '#'
       munin_label: 'Current queries'
     fetch_total:
-      munin_title: 'Total number of fetches'
+      munin_title: 'Number of fetches'
       munin_vlabel: '#'
       munin_label: 'Fetches'
     fetch_time_in_millis:
-      munin_title: 'Total time spent on fetches'
+      munin_title: 'Time spent on fetches'
       munin_vlabel: 'Seconds'
       munin_label: 'Fetch time'
       munin_divide_by: 1000
     fetch_current:
-      munin_title: 'Number of fetches currently in progress'
+      munin_title: 'Fetches currently in progress'
       munin_vlabel: '#'
       munin_label: 'Current fetches'
 total:
   indexing:
     index_total:
-      munin_title: 'Total number of documents indexed'
+      munin_title: 'Documents indexed'
       munin_vlabel: '#'
       munin_label: 'Documents'
     index_time_in_millis:
-      munin_title: 'Total time spent indexing documents'
+      munin_title: 'Time spent indexing documents'
       munin_vlabel: 'Seconds'
       munin_label: 'Indexing time'
       munin_divide_by: 1000
     index_current:
-      munin_title: 'Number of documents currently being indexed'
+      munin_title: 'Documents currently being indexed'
       munin_vlabel: '#'
       munin_label: 'Documents'
   refresh:
     total:
-      munin_title: 'Total number of index refreshes'
+      munin_title: 'Index refreshes'
       munin_vlabel: '#'
       munin_label: 'Refreshes'
     total_time_in_millis:
@@ -87,39 +87,39 @@ total:
       munin_divide_by: 1000
   flush:
     total:
-      munin_title: 'Total number of index flushes to disk'
+      munin_title: 'Index flushes to disk'
       munin_vlabel: '#'
       munin_label: 'Indices'
     total_time_in_millis:
-      munin_title: 'Total time spent flushing indices to disk'
+      munin_title: 'Time spent flushing indices to disk'
       munin_vlabel: 'Seconds'
       munin_label: 'Index flushes'
       munin_divide_by: 1000
   search:
     query_total:
-      munin_title: 'Total number of queries'
+      munin_title: 'Queries'
       munin_vlabel: '#'
       munin_label: 'Queries'
     query_time_in_millis:
-      munin_title: 'Total time spent on queries'
+      munin_title: 'Time spent on queries'
       munin_vlabel: 'Seconds'
       munin_label: 'Query time'
       munin_divide_by: 1000
     query_current:
-      munin_title: 'Number of queries currently in progress'
+      munin_title: 'Queries currently in progress'
       munin_vlabel: '#'
       munin_label: 'Current queries'
     fetch_total:
-      munin_title: 'Total number of fetches'
+      munin_title: 'Fetches'
       munin_vlabel: '#'
       munin_label: 'Fetches'
     fetch_time_in_millis:
-      munin_title: 'Total time spent on fetches'
+      munin_title: 'Time spent on fetches'
       munin_vlabel: 'Seconds'
       munin_label: 'Fetch time'
       munin_divide_by: 1000
     fetch_current:
-      munin_title: 'Number of fetches currently in progress'
+      munin_title: 'Fetches currently in progress'
       munin_vlabel: '#'
       munin_label: 'Current fetches'
 
