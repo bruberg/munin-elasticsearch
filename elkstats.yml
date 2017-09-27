@@ -3,7 +3,7 @@ primaries:
   indexing:
     index_total:
       munin_title: 'Documents indexed'
-      munin_vlabel: '#'
+      munin_vlabel: 'Documents per ${graph_period}'
       munin_label: 'Documents'
       munin_type: 'COUNTER'
     index_time_in_millis:
@@ -14,7 +14,7 @@ primaries:
       munin_divide_by: 1000
     index_current:
       munin_title: 'Documents currently being indexed'
-      munin_vlabel: '#'
+      munin_vlabel: 'Documents per ${graph_period}'
       munin_label: 'Documents'
   refresh:
     total:
