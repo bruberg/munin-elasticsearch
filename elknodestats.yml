@@ -46,7 +46,8 @@ indices:
   indexing:
     index_total:
       munin_title: 'Total number of documents indexed'
-      munin_type: 'GAUGE'
+      munin_type: 'COUNTER'
+      # munin_type: 'GAUGE'
     index_time_in_millis:
       munin_title: 'Indexing time'
       munin_type: 'COUNTER'
