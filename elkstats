@@ -8,7 +8,7 @@ use Data::Dumper;
 use Munin::Plugin;
 use LWP::UserAgent;
 use JSON qw (decode_json);
-use vars qw ($config $yamlconfig $json $debug %infohash1 %infohash2 %infohash3 $key $val);
+use vars qw ($config $yamlconfig $json $debug %infohash1 %infohash2 %infohash3);
 
 $debug = 0;
 
@@ -36,7 +36,7 @@ $json = $tmpjson->{'_all'};
 foreach my $key1 (keys %{$json}) {
   if (ref $json->{$key1} eq ref {}) { # Is it a hash?
     foreach my $key2 (keys %{$json->{$key1}}) {
-      if ($yamlconfig->{$key}->{$key2}) { # We have YAML config for this section, so we include it
+      if ($yamlconfig->{$key1}->{$key2}) { # We have YAML config for this section, so we include it
 	if (ref $json->{$key1}->{$key2} eq ref {}) {
 	  foreach my $key3 (keys %{$json->{$key1}->{$key2}}) {
 	    if ($yamlconfig->{$key1}->{$key2}->{$key3}) {
@@ -87,21 +87,14 @@ foreach my $key1 (keys %infohash2) {
     if ($config) {
       my $tmptitle = $infohash2{$key1}->{$key2}->{'title'} if $infohash2{$key1}->{$key2}->{'title'};
       $tmptype = $infohash2{$key1}->{$key2}->{'type'} if $infohash2{$key1}->{$key2}->{'type'};
-      print "graph_title ", $cluster_name, " nodes: ", ucfirst ($key1), " - ", $tmptitle, "\n";
+      print "graph_title ", ucfirst ($key1), " - ", $tmptitle, "\n";
       print "graph_category Elasticstack\n";
       print "graph_vlabel ", $infohash2{$key1}->{$key2}->{'vlabel'}, "\n" if $infohash2{$key1}->{$key2}->{'vlabel'};
-    }
-    if ($infohash2{$key1}->{$key2}->{'_all'}) {
-      for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'_all'}}) {
-	my $fieldnamenode = clean_fieldname ($node);
-	if ($config) {
-	  print $fieldnamenode, ".label ", $infohash2{$key1}->{$key2}->{'label'}, "\n";
-	  print $fieldnamenode, ".cdef ", $fieldnamenode, ",", $infohash2{$key1}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$key1}->{$key2}->{'divide_by'};
-	  print $fieldnamenode, ".type ", $tmptype, "\n" if $tmptype;
-	} else {
-	  print $fieldnamenode, ".value ", $infohash2{$key1}->{$key2}->{'value'}, "\n";
-	}
-      }
+      print $key2, ".label ", $infohash2{$key1}->{$key2}->{'label'}, "\n";
+      print $key2, ".cdef ", $key2, ",", $infohash2{$key1}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$key1}->{$key2}->{'divide_by'};
+      print $key2, ".type ", $tmptype, "\n" if $tmptype;
+    } else {
+      print $key2, ".value ", $infohash2{$key1}->{$key2}->{'value'}, "\n";
     }
   }
 }
@@ -114,21 +107,14 @@ foreach my $key1 (keys %infohash3) {
       if ($config) {
 	my $tmptitle = $infohash3{$key1}->{$key2}->{$key3}->{'title'} if $infohash3{$key1}->{$key2}->{$key3}->{'title'};
 	$tmptype = $infohash3{$key1}->{$key2}->{$key3}{'type'} if $infohash3{$key1}->{$key2}->{$key3}->{'type'};
-	print "graph_title ", $cluster_name, " nodes: ", ucfirst ($key1), " - ", ucfirst ($key2), " - ", $tmptitle, "\n";
+	print "graph_title ", ucfirst ($key1), " - ", ucfirst ($key2), " - ", $tmptitle, "\n";
 	print "graph_category Elasticstack\n";
 	print "graph_vlabel ", $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'}, "\n" if $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'};
-      }
-      if ($infohash3{$key1}->{$key2}->{$key3}->{'_all'}) {
-	for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'_all'}}) {
-	  my $fieldnamenode = clean_fieldname ($node);
-	  if ($config) {
-	    print $fieldnamenode, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'label'}, "\n";
-	    print $fieldnamenode, ".cdef ", $fieldnamenode, ",", $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'};
-	    print $fieldnamenode, ".type ", $tmptype, "\n" if $tmptype;
-	  } else {
-	    print $fieldnamenode, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'value'}, "\n";
-	  }
-	}
+	print $key3, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'label'}, "\n";
+	print $key3, ".cdef ", $key3, ",", $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'};
+	print $key3, ".type ", $tmptype, "\n" if $tmptype;
+      } else {
+        print $key3, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'value'}, "\n";
       }
     }
   }

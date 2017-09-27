@@ -4,43 +4,56 @@ primaries:
     query_total:
       munin_title: 'Total number of queries'
       munin_vlabel: '#'
+      munin_label: 'Queries'
     query_time_in_millis:
       munin_title: 'Total time spent on queries'
       munin_vlabel: 'Seconds'
+      munin_label: 'Query time'
       munin_divide_by: 1000
     query_current:
       munin_title: 'Number of queries currently in progress'
       munin_vlabel: '#'
+      munin_label: 'Current queries'
     fetch_total:
       munin_title: 'Total number of fetches'
       munin_vlabel: '#'
+      munin_label: 'Fetches'
     fetch_time_in_millis:
       munin_title: 'Total time spent on fetches'
       munin_vlabel: 'Seconds'
+      munin_label: 'Fetch time'
       munin_divide_by: 1000
     fetch_current:
       munin_title: 'Number of fetches currently in progress'
       munin_vlabel: '#'
+      munin_label: 'Current fetches'
 total:
   search:
     open_contexts: 0
     query_total:
       munin_title: 'Total number of queries'
       munin_vlabel: '#'
+      munin_label: 'Queries'
     query_time_in_millis:
       munin_title: 'Total time spent on queries'
       munin_vlabel: 'Seconds'
+      munin_label: 'Query time'
       munin_divide_by: 1000
     query_current:
       munin_title: 'Number of queries currently in progress'
       munin_vlabel: '#'
+      munin_label: 'Current queries'
     fetch_total:
       munin_title: 'Total number of fetches'
       munin_vlabel: '#'
+      munin_label: 'Fetches'
     fetch_time_in_millis:
       munin_title: 'Total time spent on fetches'
       munin_vlabel: 'Seconds'
+      munin_label: 'Fetch time'
       munin_divide_by: 1000
     fetch_current:
       munin_title: 'Number of fetches currently in progress'
       munin_vlabel: '#'
+      munin_label: 'Current fetches'
+
