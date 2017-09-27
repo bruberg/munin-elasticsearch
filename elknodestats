@@ -44,7 +44,8 @@ my $cluster_name_config = clean_fieldname ($cluster_name);
 foreach my $node (keys %{$json->{'nodes'}}) {
     # Fetch stats from each node
     # print "DEBUG ", $node, "\n" if $debug;
-    my $nodename = clean_fieldname ($json->{'nodes'}->{$node}->{'name'});
+    $node = clean_fieldname ($node);
+    my $nodename = $json->{'nodes'}->{$node}->{'name'};
     
     foreach $key (keys %{$json->{'nodes'}->{$node}}) {
 	if ($yamlconfig->{$key}) { # We have YAML config for this section
