@@ -44,7 +44,6 @@ my $cluster_name_config = clean_fieldname ($cluster_name);
 foreach my $node (keys %{$json->{'nodes'}}) {
     # Fetch stats from each node
     # print "DEBUG ", $node, "\n" if $debug;
-    $node = clean_fieldname ($node);
     my $nodename = $json->{'nodes'}->{$node}->{'name'};
     
     foreach $key (keys %{$json->{'nodes'}->{$node}}) {
@@ -116,12 +115,13 @@ foreach my $key1 (keys %infohash2) {
 	}
 	if ($infohash2{$key1}->{$key2}->{'nodes'}) {
 	    for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'nodes'}}) {
+                my $fieldnamenode = clean_fieldname ($node);
 		if ($config) {
-		    print $node, ".label ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'label'}, "\n";
-                    print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$key1}->{$key2}->{'divide_by'};
-		    print $node, ".type ", $tmptype, "\n" if $tmptype;
+		    print $fieldnamenode, ".label ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'label'}, "\n";
+                    print $fieldnamenode, ".cdef ", $fieldnamenode, ",", $infohash2{$key1}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$key1}->{$key2}->{'divide_by'};
+		    print $fieldnamenode, ".type ", $tmptype, "\n" if $tmptype;
 		} else {
-		    print $node, ".value ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'value'}, "\n";
+		    print $fieldnamenode, ".value ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'value'}, "\n";
 		}
 	    }
 	}
@@ -142,12 +142,13 @@ foreach my $key1 (keys %infohash3) {
 	    }
 	    if ($infohash3{$key1}->{$key2}->{$key3}->{'nodes'}) {
 		for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'nodes'}}) {
+                    my $fieldnamenode = clean_fieldname ($node);
 		    if ($config) {
-			print $node, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'}, "\n";
-                        print $node, ".cdef ", $node, ",", $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'};
-			print $node, ".type ", $tmptype, "\n" if $tmptype;
+			print $fieldnamenode, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'}, "\n";
+                        print $fieldnamenode, ".cdef ", $fieldnamenode, ",", $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'};
+			print $fieldnamenode, ".type ", $tmptype, "\n" if $tmptype;
 		    } else {
-			print $node, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'}, "\n";
+			print $fieldnamenode, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'}, "\n";
 		    }
 		}
 	    }
