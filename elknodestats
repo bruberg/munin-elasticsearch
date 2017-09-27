@@ -70,6 +70,8 @@ foreach my $node (keys %{$json->{'nodes'}}) {
 					    $infohash3{$key}->{$key2}->{$key3}->{'title'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_title'};
 					    $infohash3{$key}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_type'};
                                             $infohash3{$key}->{$key2}->{$key3}->{'vlabel'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_vlabel'} if $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_vlabel'};
+                                            $infohash3{$key}->{$key2}->{$key3}->{'divide_by'} = $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_divide_by'} if $yamlconfig->{$key}->{$key2}->{$key3}->{'munin_divide_by'};
+
 					}
 				    }
 				}
@@ -79,6 +81,7 @@ foreach my $node (keys %{$json->{'nodes'}}) {
 				$infohash2{$key}->{$key2}->{'title'} = $yamlconfig->{$key}->{$key2}->{'munin_title'};
 				$infohash2{$key}->{$key2}->{'type'} = $yamlconfig->{$key}->{$key2}->{'munin_type'} if $yamlconfig->{$key}->{$key2}->{'munin_type'};
                                 $infohash2{$key}->{$key2}->{'vlabel'} = $yamlconfig->{$key}->{$key2}->{'munin_vlabel'} if $yamlconfig->{$key}->{$key2}->{'munin_vlabel'};
+                                $infohash2{$key}->{$key2}->{'divide_by'} = $yamlconfig->{$key}->{$key2}->{'munin_divide_by'} if $yamlconfig->{$key}->{$key2}->{'munin_divide_by'};
 				$infohash2{$key}->{$key2}->{'nodes'}->{$node}->{'label'} = $nodename;
 				$infohash2{$key}->{$key2}->{'nodes'}->{$node}->{'value'} = $json->{'nodes'}->{$node}->{$key}->{$key2};
 			    }
@@ -90,6 +93,7 @@ foreach my $node (keys %{$json->{'nodes'}}) {
 		    $infohash1{$key}->{'title'} = $yamlconfig->{$key}->{'munin_title'};
 		    $infohash1{$key}->{'type'} = $yamlconfig->{$key}->{'munin_type'} if $yamlconfig->{$key}->{'munin_type'};
                     $infohash1{$key}->{'vlabel'} = $yamlconfig->{$key}->{'munin_vlabel'} if $yamlconfig->{$key}->{'munin_vlabel'};
+                    $infohash1{$key}->{'divide_by'} = $yamlconfig->{$key}->{'munin_divide_by'} if $yamlconfig->{$key}->{'munin_divide_by'};
 		    $infohash1{$key}->{'nodes'}->{$node}->{'label'} = $nodename;
 		    $infohash1{$key}->{'nodes'}->{$node}->{'value'} = $json->{'nodes'}->{$node}->{$key};
 		}
@@ -113,6 +117,7 @@ foreach my $key1 (keys %infohash2) {
 	    for my $node (sort keys %{$infohash2{$key1}->{$key2}->{'nodes'}}) {
 		if ($config) {
 		    print $node, ".label ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'label'}, "\n";
+                    print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'divide_by'}, "/\n" if $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'divide_by'}
 		    print $node, ".type ", $tmptype, "\n" if $tmptype;
 		} else {
 		    print $node, ".value ", $infohash2{$key1}->{$key2}->{'nodes'}->{$node}->{'value'}, "\n";
@@ -138,6 +143,7 @@ foreach my $key1 (keys %infohash3) {
 		for my $node (sort keys %{$infohash3{$key1}->{$key2}->{$key3}->{'nodes'}}) {
 		    if ($config) {
 			print $node, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'label'}, "\n";
+                        print $node, ".cdef ", $node, ",", $infohash2{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'divide_by'}, "/\n" if $infohash2{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'divide_by'}
 			print $node, ".type ", $tmptype, "\n" if $tmptype;
 		    } else {
 			print $node, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'nodes'}->{$node}->{'value'}, "\n";

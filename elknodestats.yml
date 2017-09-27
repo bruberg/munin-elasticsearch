@@ -38,6 +38,11 @@ indices:
       munin_title: 'Index store size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
+    throttle_time_in_millis:
+      munin_title: 'Throttle time'
+      munin_type: 'COUNTER'
+      munin_vlabel: 'seconds'
+      munin_divide_by: 1000
   indexing:
     index_total:
       munin_title: 'Total size of index'
