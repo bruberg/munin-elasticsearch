@@ -16,12 +16,12 @@ indices:
   docs:
     count:
       munin_title: 'Documents'
-      munin_type: 'GAUGE'
-      munin_vlabel: 'Documents'
+      munin_type: 'COUNTER'
+      munin_vlabel: 'Documents per ${graph_period}'
     deleted:
       munin_title: 'Deleted documents'
-      munin_type: 'GAUGE'
-      munin_vlabel: 'Documents'
+      munin_type: 'COUNTER'
+      munin_vlabel: 'Documents per ${graph_period}'
   store:
     size_in_bytes:
       munin_title: 'Index store size'

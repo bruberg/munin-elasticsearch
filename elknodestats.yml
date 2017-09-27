@@ -45,9 +45,9 @@ indices:
       munin_divide_by: 1000
   indexing:
     index_total:
-      munin_title: 'Total number of documents indexed'
+      munin_title: 'Documents indexed'
       munin_type: 'COUNTER'
-      # munin_type: 'GAUGE'
+      munin_vlabel: 'Documents per ${graph_period}'
     index_time_in_millis:
       munin_title: 'Indexing time'
       munin_type: 'COUNTER'
@@ -55,50 +55,62 @@ indices:
       munin_divide_by: 1000
   get:
     total:
-      munin_title: 'Total number of GET requests'
+      munin_title: 'GET requests'
       munin_type: 'COUNTER'
+      munin_vlabel: 'GET requests per ${graph_period}'
   search:
     query_total:
-      munin_title: 'Number of queries'
+      munin_title: 'Search queries'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Queries per ${graph_period}'
     fetch_total:
-      munin_title: 'Number of fetches'
+      munin_title: 'Search fetches'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Fetches per ${graph_period}'
   refresh:
     total:
-      munin_title: 'Total number of refresh requests'
+      munin_title: 'Refresh requests'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Refresh reqs/${graph_period}'
   flush:
     total:
-      munin_title: 'Number of flushes'
+      munin_title: 'Flushes'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Flushes per ${graph_period}'
   warmer:
     total:
-      munin_title: 'Total number of warmer requests'
+      munin_title: 'Warmer requests'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Warmers per ${graph_period}'
   query_cache:
     memory_size_in_bytes:
       munin_title: 'Query cache memory size'
       munin_type: 'GAUGE'
       munin_vlabel: 'Bytes'
     total_count:
-      munin_title: 'Total number of queries'
+      munin_title: 'Query cache count'
       munin_type: 'COUNTER'
+      munin_vlabel: 'FIXME per ${graph_period}'
     hit_count:
-      munin_title: 'Number of HIT queries'
+      munin_title: 'Query cache HITs'
       munin_type: 'COUNTER'
+      munin_vlabel: 'HITs per ${graph_period}'
     miss_count:
-      munin_title: 'Number of MISS queries'
+      munin_title: 'Query cache MISSes'
       munin_type: 'COUNTER'
+      munin_vlabel: 'MISSes per ${graph_period}'
     cache_queries:
-      munin_title: 'Number of cache queries'
+      munin_title: 'Cache queries'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Cache queries / ${graph_period}'
     cache_count:
-      munin_title: 'Number of cache count'
-      munin_type: 'COUNTER'
+      munin_title: 'Cache count'
+      munin_type: 'GAUGE'
+      munin_vlabel: 'FIXME'
     evictions:
       munin_title: 'Number of evictions'
       munin_type: 'COUNTER'
+      munin_vlabel: 'Evictions per ${graph_period}'
   segments:
     count:
       munin_title: 'Number of segments'
