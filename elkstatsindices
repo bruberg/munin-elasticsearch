@@ -90,20 +90,21 @@ foreach my $index (keys %infohash2) {
   my $cleanindex = clean_fieldname ($index);
   foreach my $key1 (keys %{$infohash2{$index}}) {
     foreach my $key2 (keys %{$infohash2{$key1}}) {
+      my $fieldname = clean_fieldname ($key2);
       print "\nmultigraph elkstatsindices__${key1}.${cleanindex}__${key2}\n";
       my $tmptype = "";
       my $tmpobj = $infohash2{$index}->{$key1}->{$key2};
       if ($config) {
 	my $tmptitle = $tmpobj->{'title'} if $tmpobj->{'title'};
 	$tmptype = $tmpobj->{'type'} if $tmpobj->{'type'};
-	print "graph_title ", $index, " - ", ucfirst ($key1), " - ", $tmptitle, "\n";
+	print "graph_title ", ucfirst ($tmptitle), ": ", $index, "\n";
 	print "graph_category Elasticsearch\n";
 	print "graph_vlabel ", $tmpobj->{'vlabel'}, "\n" if $tmpobj->{'vlabel'};
-	print $key2, ".label ", $tmpobj->{'label'}, "\n";
-	print $key2, ".cdef ", $key2, ",", $tmpobj->{'divide_by'}, ",/\n" if $tmpobj->{'divide_by'};
-	print $key2, ".type ", $tmptype, "\n" if $tmptype;
+	print $fieldname, ".label ", $tmpobj->{'label'}, "\n";
+	print $fieldname, ".cdef ", $fieldname, ",", $tmpobj->{'divide_by'}, ",/\n" if $tmpobj->{'divide_by'};
+	print $fieldname, ".type ", $tmptype, "\n" if $tmptype;
       } else {
-	print $key2, ".value ", $tmpobj->{'value'}, "\n";
+	print $fieldname, ".value ", $tmpobj->{'value'}, "\n";
       }
     }
   }
@@ -114,22 +115,21 @@ foreach my $index (keys %infohash3) {
   foreach my $key1 (keys %{$infohash3{$index}}) {
     foreach my $key2 (keys %{$infohash3{$index}->{$key1}}) {
       foreach my $key3 (keys %{$infohash3{$index}->{$key1}->{$key2}}) {
-	# print "\nmultigraph elkstatsindices__${key1}.${cleanindex}__${key2}__${key3}\n";
-	# multigraph elkstatsindices__total__indexing__index_total
+        my $fieldname = clean_fieldname ($key3);
 	print "\nmultigraph elkstatsindices__${key1}__${key2}__${key3}.${cleanindex}\n";
 	my $tmptype = "";
         my $tmpobj = $infohash3{$index}->{$key1}->{$key2}->{$key3};
 	if ($config) {
 	  my $tmptitle = $tmpobj->{'title'} if $tmpobj->{'title'};
 	  $tmptype = $tmpobj->{'type'} if $tmpobj->{'type'};
-	  print "graph_title ", $index, " - ", ucfirst ($key1), " - ", ucfirst ($key2), " - ", $tmptitle, "\n";
+          print "graph_title ", ucfirst ($tmptitle), ": ", $index, "\n";
 	  print "graph_category Elasticsearch\n";
 	  print "graph_vlabel ", $tmpobj->{'vlabel'}, "\n" if $tmpobj->{'vlabel'};
-	  print $key3, ".label ", $tmpobj->{'label'}, "\n";
-	  print $key3, ".cdef ", $key3, ",", $tmpobj->{'divide_by'}, ",/\n" if $tmpobj->{'divide_by'};
-	  print $key3, ".type ", $tmptype, "\n" if $tmptype;
+	  print $fieldname, ".label ", $tmpobj->{'label'}, "\n";
+	  print $fieldname, ".cdef ", $fieldname, ",", $tmpobj->{'divide_by'}, ",/\n" if $tmpobj->{'divide_by'};
+	  print $fieldname, ".type ", $tmptype, "\n" if $tmptype;
 	} else {
-	  print $key3, ".value ", $tmpobj->{'value'}, "\n";
+	  print $fieldname, ".value ", $tmpobj->{'value'}, "\n";
 	}
       }
     }
