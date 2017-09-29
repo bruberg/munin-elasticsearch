@@ -174,7 +174,7 @@ foreach my $topic ('primaries', 'total') {
 	if ($config) {
 	  print $cleanindex, ".label ", $index, "\n";
 	  print $cleanindex, ".type ", $fields{$field}->{'type'}, "\n" if $fields{$field}->{'type'};
-	  print $cleanindex, ".cdef ", $cleanindex, ",", $fields{$field}->{'divide_by'}, "/\n" if $fields{$field}->{'divide_by'};
+	  print $cleanindex, ".cdef ", $cleanindex, ",", $fields{$field}->{'divide_by'}, ",/\n" if $fields{$field}->{'divide_by'};
 	} else {
 	  print $cleanindex, ".value ", $infohash3{$index}->{$topic}->{$key2}->{$field}->{'value'}, "\n";
 	}
