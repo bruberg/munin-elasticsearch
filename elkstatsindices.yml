@@ -1,0 +1,146 @@
+---
+primaries:
+  indexing:
+    index_total:
+      munin_title: 'Documents indexed'
+      munin_vlabel: 'Documents per ${graph_period}'
+      munin_label: 'Documents'
+      munin_type: 'COUNTER'
+    index_time_in_millis:
+      munin_title: 'Time spent indexing documents'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Indexing time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+    index_current:
+      munin_title: 'Documents currently being indexed'
+      munin_vlabel: 'Documents'
+      munin_label: 'Documents'
+  refresh:
+    total:
+      munin_title: 'Index refreshes'
+      munin_vlabel: 'Indices refreshed per ${graph_period}'
+      munin_label: 'Refreshes'
+      munin_type: 'COUNTER'
+    total_time_in_millis:
+      munin_title: 'Time spent refreshing indices'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Refresh time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+  flush:
+    total:
+      munin_title: 'Index flushes to disk'
+      munin_vlabel: 'Indices flushed per ${graph_period}'
+      munin_label: 'Indices'
+      munin_type: 'COUNTER'
+    total_time_in_millis:
+      munin_title: 'Time spent flushing indices to disk'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Index flushes'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+  search:
+    query_total:
+      munin_title: 'Queries'
+      munin_vlabel: 'Queries per ${graph_period}'
+      munin_label: 'Queries'
+      munin_type: 'COUNTER'
+    query_time_in_millis:
+      munin_title: 'Time spent on queries'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Query time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+    query_current:
+      munin_title: 'Queries currently in progress'
+      munin_vlabel: 'Queries'
+      munin_label: 'Current queries'
+      munin_type: 'GAUGE'
+    fetch_total:
+      munin_title: 'Fetches'
+      munin_vlabel: 'Fetches per ${graph_period}'
+      munin_label: 'Fetches'
+      munin_type: 'COUNTER'
+    fetch_time_in_millis:
+      munin_title: 'Time spent on fetches'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Fetch time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+    fetch_current:
+      munin_title: 'Fetches currently in progress'
+      munin_vlabel: 'Fetches'
+      munin_label: 'Current fetches'
+total:
+  indexing:
+    index_total:
+      munin_title: 'Documents indexed'
+      munin_vlabel: 'Documents per ${graph_period}'
+      munin_label: 'Documents'
+      munin_type: 'COUNTER'
+    index_time_in_millis:
+      munin_title: 'Time spent indexing documents'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Indexing time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+    index_current:
+      munin_title: 'Documents currently being indexed'
+      munin_vlabel: 'Documents'
+      munin_label: 'Documents'
+  refresh:
+    total:
+      munin_title: 'Index refreshes'
+      munin_vlabel: 'Indices refreshed per ${graph_period}'
+      munin_label: 'Refreshes'
+      munin_type: 'COUNTER'
+    total_time_in_millis:
+      munin_title: 'Total time spent refreshing indices'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Refresh time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+  flush:
+    total:
+      munin_title: 'Index flushes to disk'
+      munin_vlabel: 'Indices flushed per ${graph_period}'
+      munin_label: 'Indices'
+      munin_type: 'COUNTER'
+    total_time_in_millis:
+      munin_title: 'Time spent flushing indices to disk'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Index flushes'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+  search:
+    query_total:
+      munin_title: 'Queries'
+      munin_vlabel: 'Queries per ${graph_period}'
+      munin_label: 'Queries'
+      munin_type: 'COUNTER'
+    query_time_in_millis:
+      munin_title: 'Time spent on queries'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Query time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+    query_current:
+      munin_title: 'Queries currently in progress'
+      munin_vlabel: 'Queries'
+      munin_label: 'Current queries'
+    fetch_total:
+      munin_title: 'Fetches'
+      munin_vlabel: 'Fetches per ${graph_period}'
+      munin_label: 'Fetches'
+      munin_type: 'COUNTER'
+    fetch_time_in_millis:
+      munin_title: 'Time spent on fetches'
+      munin_vlabel: 'Seconds'
+      munin_label: 'Fetch time'
+      munin_type: 'COUNTER'
+      munin_divide_by: 1000
+    fetch_current:
+      munin_title: 'Fetches currently in progress'
+      munin_vlabel: 'Fetches'
+      munin_label: 'Current fetches'
