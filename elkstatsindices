@@ -35,7 +35,7 @@ if ($response->is_success) {
 $json = $tmpjson->{'indices'};
 
 foreach my $index (keys %{$json}) {
-  print "$index\n";
+  # print "$index\n";
   
   my $json1 = $json->{$index};
   foreach my $key1 (keys %{$json1}) {
