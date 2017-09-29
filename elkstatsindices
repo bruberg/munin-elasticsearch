@@ -34,88 +34,91 @@ if ($response->is_success) {
 $json = $tmpjson->{'indices'};
 
 foreach my $index (keys %{$json}) {
-  print "Index: $index\n";
-  if (ref $json->{$index} eq ref {}) { # Is it a hash?
-    foreach my $key2 (keys %{$json->{$index}}) {
-      if ($yamlconfig->{$index}->{$key2}) { # We have YAML config for this section, so we include it
-	if (ref $json->{$index}->{$key2} eq ref {}) {
-	  foreach my $key3 (keys %{$json->{$index}->{$key2}}) {
-	    if ($yamlconfig->{$index}->{$key2}->{$key3}) {
+  my $json1 = $json->{$index};
+  foreach my $key1 (keys %{$json1}) {
+  if (ref $json1 eq ref {}) { # Is it a hash?
+    foreach my $key2 (keys %{$json1->{$key1}}) {
+      my $json2 = $json1->{$key2};
+      if ($yamlconfig->{$key1}->{$key2}) { # We have YAML config for this section, so we include it
+	if (ref $json2 eq ref {}) {
+	  foreach my $key3 (keys %{$json2->{$key1}->{$key2}}) {
+            my $json3 = $json2->{$key3};
+	    if ($yamlconfig->{$key1}->{$key2}->{$key3}) {
 	      
-	      if (ref $json->{$index}->{$key2}->{$key3} eq ref {}) { # Is it a hash?
+	      if (ref $json3 eq ref {}) { # Is it a hash?
 		# print " - - $json->{'_all'}->{$node}->{$key}->{$key2}->{$key3} is a hash\n";
 	      } else {
-		if ($yamlconfig->{$index}->{$key2}->{$key3}->{'munin_title'}) {
-		  $infohash3{$index}->{$key2}->{$key3}->{'label'} = ($yamlconfig->{$index}->{$key2}->{$key3}->{'munin_label'} || $key3);
-		  $infohash3{$index}->{$key2}->{$key3}->{'value'} = $json->{$index}->{$key2}->{$key3};
-		  $infohash3{$index}->{$key2}->{$key3}->{'title'} = $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_title'};
-		  $infohash3{$index}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_type'};
-		  $infohash3{$index}->{$key2}->{$key3}->{'vlabel'} = $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_vlabel'} if $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_vlabel'};
-		  $infohash3{$index}->{$key2}->{$key3}->{'divide_by'} = $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_divide_by'} if $yamlconfig->{$index}->{$key2}->{$key3}->{'munin_divide_by'};
+		if ($yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_title'}) {
+		  $infohash3{$key1}->{$key2}->{$key3}->{'label'} = ($yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_label'} || $key3);
+		  $infohash3{$key1}->{$key2}->{$key3}->{'value'} = $json3;
+		  $infohash3{$key1}->{$key2}->{$key3}->{'title'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_title'};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'type'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_type'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_type'};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_vlabel'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_vlabel'};
+		  $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'} = $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_divide_by'} if $yamlconfig->{$key1}->{$key2}->{$key3}->{'munin_divide_by'};
 		  
 		}
 	      }
 	    }
 	  }
 	} else { # $key2 is not a hash, checking for name
-	  if ($yamlconfig->{$index}->{$key2}->{'munin_title'}) {
-            $infohash2{$index}->{$key2}->{'label'} = ($yamlconfig->{$index}->{$key2}->{'munin_label'} || $key2);
-	    $infohash2{$index}->{$key2}->{'value'} = $json->{$index}->{$key2};
-	    $infohash2{$index}->{$key2}->{'title'} = $yamlconfig->{$index}->{$key2}->{'munin_title'};
-	    $infohash2{$index}->{$key2}->{'type'} = $yamlconfig->{$index}->{$key2}->{'munin_type'} if $yamlconfig->{$index}->{$key2}->{'munin_type'};
-	    $infohash2{$index}->{$key2}->{'vlabel'} = $yamlconfig->{$index}->{$key2}->{'munin_vlabel'} if $yamlconfig->{$index}->{$key2}->{'munin_vlabel'};
-	    $infohash2{$index}->{$key2}->{'divide_by'} = $yamlconfig->{$index}->{$key2}->{'munin_divide_by'} if $yamlconfig->{$index}->{$key2}->{'munin_divide_by'};
+	  if ($yamlconfig->{$key1}->{$key2}->{'munin_title'}) {
+            $infohash2{$key1}->{$key2}->{'label'} = ($yamlconfig->{$key1}->{$key2}->{'munin_label'} || $key2);
+	    $infohash2{$key1}->{$key2}->{'value'} = $json2;
+	    $infohash2{$key1}->{$key2}->{'title'} = $yamlconfig->{$key1}->{$key2}->{'munin_title'};
+	    $infohash2{$key1}->{$key2}->{'type'} = $yamlconfig->{$key1}->{$key2}->{'munin_type'} if $yamlconfig->{$key1}->{$key2}->{'munin_type'};
+	    $infohash2{$key1}->{$key2}->{'vlabel'} = $yamlconfig->{$key1}->{$key2}->{'munin_vlabel'} if $yamlconfig->{$key1}->{$key2}->{'munin_vlabel'};
+	    $infohash2{$key1}->{$key2}->{'divide_by'} = $yamlconfig->{$key1}->{$key2}->{'munin_divide_by'} if $yamlconfig->{$key1}->{$key2}->{'munin_divide_by'};
 	  }
 	}
       }
     }
   } else { # key is not a hash
-    if ($yamlconfig->{$index}->{'munin_title'}) {
-      $infohash1{$index}->{'label'} = ($yamlconfig->{$index}->{'munin_label'} || $index);
-      $infohash1{$index}->{'value'} = $json->{$index};
-      $infohash1{$index}->{'title'} = $yamlconfig->{$index}->{'munin_title'};
-      $infohash1{$index}->{'type'} = $yamlconfig->{$index}->{'munin_type'} if $yamlconfig->{$index}->{'munin_type'};
-      $infohash1{$index}->{'vlabel'} = $yamlconfig->{$index}->{'munin_vlabel'} if $yamlconfig->{$index}->{'munin_vlabel'};
-      $infohash1{$index}->{'divide_by'} = $yamlconfig->{$index}->{'munin_divide_by'} if $yamlconfig->{$index}->{'munin_divide_by'};
+    if ($yamlconfig->{$key1}->{'munin_title'}) {
+      $infohash1{$key1}->{'label'} = ($yamlconfig->{$key1}->{'munin_label'} || $key1);
+      $infohash1{$key1}->{'value'} = $json1;
+      $infohash1{$key1}->{'title'} = $yamlconfig->{$key1}->{'munin_title'};
+      $infohash1{$key1}->{'type'} = $yamlconfig->{$key1}->{'munin_type'} if $yamlconfig->{$key1}->{'munin_type'};
+      $infohash1{$key1}->{'vlabel'} = $yamlconfig->{$key1}->{'munin_vlabel'} if $yamlconfig->{$key1}->{'munin_vlabel'};
+      $infohash1{$key1}->{'divide_by'} = $yamlconfig->{$key1}->{'munin_divide_by'} if $yamlconfig->{$key1}->{'munin_divide_by'};
     }
   }
 }
 
-foreach my $index (keys %infohash2) {
-  foreach my $key2 (keys %{$infohash2{$index}}) {
+foreach my $key1 (keys %infohash2) {
+  foreach my $key2 (keys %{$infohash2{$key1}}) {
     print "\nmultigraph elkstats__${index}__${key2}\n";
     my $tmptype = "";
     if ($config) {
-      my $tmptitle = $infohash2{$index}->{$key2}->{'title'} if $infohash2{$index}->{$key2}->{'title'};
-      $tmptype = $infohash2{$index}->{$key2}->{'type'} if $infohash2{$index}->{$key2}->{'type'};
-      print "graph_title ", ucfirst ($index), " - ", $tmptitle, "\n";
+      my $tmptitle = $infohash2{$key1}->{$key2}->{'title'} if $infohash2{$key1}->{$key2}->{'title'};
+      $tmptype = $infohash2{$key1}->{$key2}->{'type'} if $infohash2{$key1}->{$key2}->{'type'};
+      print "graph_title ", ucfirst ($key1), " - ", $tmptitle, "\n";
       print "graph_category Elasticstack\n";
-      print "graph_vlabel ", $infohash2{$index}->{$key2}->{'vlabel'}, "\n" if $infohash2{$index}->{$key2}->{'vlabel'};
-      print $key2, ".label ", $infohash2{$index}->{$key2}->{'label'}, "\n";
-      print $key2, ".cdef ", $key2, ",", $infohash2{$index}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$index}->{$key2}->{'divide_by'};
+      print "graph_vlabel ", $infohash2{$key1}->{$key2}->{'vlabel'}, "\n" if $infohash2{$key1}->{$key2}->{'vlabel'};
+      print $key2, ".label ", $infohash2{$key1}->{$key2}->{'label'}, "\n";
+      print $key2, ".cdef ", $key2, ",", $infohash2{$key1}->{$key2}->{'divide_by'}, ",/\n" if $infohash2{$key1}->{$key2}->{'divide_by'};
       print $key2, ".type ", $tmptype, "\n" if $tmptype;
     } else {
-      print $key2, ".value ", $infohash2{$index}->{$key2}->{'value'}, "\n";
+      print $key2, ".value ", $infohash2{$key1}->{$key2}->{'value'}, "\n";
     }
   }
 }
 
-foreach my $index (keys %infohash3) {
-  foreach my $key2 (keys %{$infohash3{$index}}) {
-    foreach my $key3 (keys %{$infohash3{$index}->{$key2}}) {
+foreach my $key1 (keys %infohash3) {
+  foreach my $key2 (keys %{$infohash3{$key1}}) {
+    foreach my $key3 (keys %{$infohash3{$key1}->{$key2}}) {
       print "\nmultigraph elkstats__${index}__${key2}__${key3}\n";
       my $tmptype = "";
       if ($config) {
-	my $tmptitle = $infohash3{$index}->{$key2}->{$key3}->{'title'} if $infohash3{$index}->{$key2}->{$key3}->{'title'};
-	$tmptype = $infohash3{$index}->{$key2}->{$key3}{'type'} if $infohash3{$index}->{$key2}->{$key3}->{'type'};
-	print "graph_title ", ucfirst ($index), " - ", ucfirst ($key2), " - ", $tmptitle, "\n";
+	my $tmptitle = $infohash3{$key1}->{$key2}->{$key3}->{'title'} if $infohash3{$key1}->{$key2}->{$key3}->{'title'};
+	$tmptype = $infohash3{$key1}->{$key2}->{$key3}{'type'} if $infohash3{$key1}->{$key2}->{$key3}->{'type'};
+	print "graph_title ", ucfirst ($key1), " - ", ucfirst ($key2), " - ", $tmptitle, "\n";
 	print "graph_category Elasticstack\n";
-	print "graph_vlabel ", $infohash3{$index}->{$key2}->{$key3}->{'vlabel'}, "\n" if $infohash3{$index}->{$key2}->{$key3}->{'vlabel'};
-	print $key3, ".label ", $infohash3{$index}->{$key2}->{$key3}->{'label'}, "\n";
-	print $key3, ".cdef ", $key3, ",", $infohash3{$index}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$index}->{$key2}->{$key3}->{'divide_by'};
+	print "graph_vlabel ", $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'}, "\n" if $infohash3{$key1}->{$key2}->{$key3}->{'vlabel'};
+	print $key3, ".label ", $infohash3{$key1}->{$key2}->{$key3}->{'label'}, "\n";
+	print $key3, ".cdef ", $key3, ",", $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'}, ",/\n" if $infohash3{$key1}->{$key2}->{$key3}->{'divide_by'};
 	print $key3, ".type ", $tmptype, "\n" if $tmptype;
       } else {
-        print $key3, ".value ", $infohash3{$index}->{$key2}->{$key3}->{'value'}, "\n";
+        print $key3, ".value ", $infohash3{$key1}->{$key2}->{$key3}->{'value'}, "\n";
       }
     }
   }
