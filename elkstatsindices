@@ -36,7 +36,10 @@ $json = $tmpjson->{'indices'};
 
 foreach my $index (keys %{$json}) {
   # print "$index\n";
-  
+
+  # We skip hidden indices
+  next if $index =~ /^\./;
+ 
   my $json1 = $json->{$index};
   foreach my $key1 (keys %{$json1}) {
     if (ref $json1 eq ref {}) { # Is it a hash?
